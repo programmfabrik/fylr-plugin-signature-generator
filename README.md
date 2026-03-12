@@ -64,7 +64,7 @@ In order to use the plugin, you must configure some options and the sequence-pat
     * Allowed Objecttype
         * Choose the objecttype for which the pattern may be used. Each pattern may only be used in one objecctype
     * Pattern
-        * a pattern is a series of tokens. Read and follow the [guideline for pattern-syntax](https://github.com/programmfabrik/fylr-plugin-signature-generator/readme_patternsyntax.md). 
+        * a pattern is a series of tokens. Read and follow the [guideline for pattern-syntax](https://github.com/programmfabrik/fylr-plugin-signature-generator/blob/main/readme_patternsyntax.md)). 
     * Variables
         * a token can use a variable to integrate values from the original record into the signature. See the guideline.
     * Sequences
