@@ -1,0 +1,129 @@
+plugin:
+  name: custom-data-type-signature-generator
+  version: 1.0
+  l10n: l10n/signature-generator.csv
+  url: https://github.com/programmfabrik/fylr-plugin-signature-generator
+  displayname:
+    de-DE: Inventarnummern-Generator
+    en-US: Signature-Generator
+  info:
+    de-DE: Erlaubt das automatische Generieren von Inventarnummern für Objekte an Hand von konfigurierbaren Vorlagen.
+    en-US: Allows the automatic generation of signature numbers for objects based on configurable templates.
+  webfrontend:
+    url: signature-generator.js
+    css: signature-generator.css    
+  server:
+    api-version:
+      require: 1
+
+base_url_prefix: "webfrontend"
+
+custom_types:
+  signature-generator:
+    config:
+      mask:
+        - name: allow_manual_edit
+          parameters:
+            value:
+              type: bool
+              default: false
+
+base_config:    
+  - name: signature-generator
+    group: signature_generator
+    parameters:
+      enabled:
+        type: bool
+        position: 0
+        default: true
+      api_user:    
+        type: user        
+      sequence_objecttype:
+        type: text
+        plugin_type: objecttype-selector
+        position: 1
+      sequence_pattern_id_field:
+        type: text        
+        plugin_type: field_selector_pattern_id_field
+        position: 2
+      sequence_sequence_id_field:
+        type: text
+        plugin_type: field_selector_sequence_id_field
+        position: 3
+      sequence_num_field:
+        type: text
+        plugin_type: field_selector_num_field
+        position: 4
+      patterns:
+        type: table
+        position: 5
+        fields:
+          - name: pattern_id
+            type: text
+            position: 6
+            placeholder: true
+          - name: description
+            type: text-multiline
+            position: 7
+            placeholder: true
+          - name: allowed_objecttype
+            type: text
+            plugin_type: objecttype-selector
+            store_as_json: false
+            position: 8
+          - name: pattern
+            type: text
+            position: 9
+            placeholder: true
+          - name: variables
+            type: table
+            position: 10
+            fields:
+              - name: variable
+                type: text
+                placeholder: true
+              - name: path
+                type: text
+                placeholder: true
+          - name: sequences
+            type: table
+            position: 11
+            fields:
+              - name: sequence_id
+                type: text
+                placeholder: true
+              - name: startvalue
+                type: text
+                placeholder: true
+
+system_rights:
+  - name: allow_deletion_of_signature
+    comment: This right allows users to delete an already existing number. The sequence will not be affected.
+    parameters:
+      - name: allow_deletion_of_signature
+        type: bool
+
+callbacks:
+  db_pre_save:
+    steps:
+      - name: "Generate Signature via configured pattern"
+        callback: generateSignature
+    callbacks:
+      generateSignature:
+        plugin_user:
+          base_config: "signature-generator.api_user"
+        exec:
+          plugin_user:
+            reference: system:root
+          service: "node"
+          commands:
+            - prog: "node"
+              stdin:
+                type: body
+              stdout:
+                type: body
+              args:
+                - type: "value"
+                  value: "%_exec.pluginDir%/server/signature-generator.js"
+                - type: "value"
+                  value: "%info.json%"                        

@@ -1,0 +1,29 @@
+/* CSS for poolmanager */
+
+/* radio-buttons */
+
+.cui-options.signature-generator-pool-pattern-radio-options .cui-checkbox{
+    width: 100%;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+/* mask */
+
+/* input readonly-style */
+.signaturegenerator-input-readonly input {
+    background-color: #d7d7d7;
+    pointer-events: none;
+} 
+
+/* disable focus on input */
+.signaturegenerator-input-readonly input:focus {
+    outline: none; 
+    box-shadow: none;
+    border-color: none;
+}
+
+/* align x-button */
+.fylr-plugin-signature-generator-x-button {
+    margin-top: 22px;
+}

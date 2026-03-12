@@ -1,0 +1,48 @@
+key,de-DE,en-US
+signaturegenerator.pool.manager.tab.headline,Inventarnummern-Generator,Signature Generator
+server.config.name.system.signature-generator,Inventarnummern-Generator,Signature Generator
+server.config.parameter.system.signature-generator.enabled.label,Status,Status
+server.config.parameter.system.signature-generator.enabled.checkbox,Aktiviert,Activated
+server.config.parameter.system.signature-generator.patterns.label,Pattern konfigurieren,Configure Patterns
+server.config.parameter.system.signature-generator.patterns.pattern_id.label,ID des Patterns,Pattern ID
+server.config.parameter.system.signature-generator.patterns.pattern_id.placeholder,ID eingeben,Enter ID
+server.config.parameter.system.signature-generator.patterns.description.label,Beschreibung,Description
+server.config.parameter.system.signature-generator.patterns.description.placeholder,Beschreibung eingeben,Enter description
+server.config.parameter.system.signature-generator.patterns.pattern.label,Pattern,Pattern
+server.config.parameter.system.signature-generator.patterns.pattern.placeholder,Pattern eingeben,Enter pattern
+
+server.config.parameter.system.signature-generator.patterns.variables.label,Variablen,Variables
+server.config.parameter.system.signature-generator.patterns.variables.variable.label,Variable,Variable
+server.config.parameter.system.signature-generator.patterns.variables.variable.placeholder,Variable eingeben,Enter variable
+server.config.parameter.system.signature-generator.patterns.variables.path.label,Wert,Value
+server.config.parameter.system.signature-generator.patterns.variables.path.placeholder,Pfad eingeben,Enter path
+
+server.config.parameter.system.signature-generator.patterns.sequences.label,Sequenzen,Sequences
+server.config.parameter.system.signature-generator.patterns.sequences.sequence_id.label,Sequenz,Sequenc
+server.config.parameter.system.signature-generator.patterns.sequences.sequence_id.placeholder,Sequenz eingeben,Enter sequence
+server.config.parameter.system.signature-generator.patterns.sequences.startvalue.label,Startwert,Startvalue
+server.config.parameter.system.signature-generator.patterns.sequences.startvalue.placeholder,Startwert eingeben,Enter Startvalue
+
+server.config.parameter.system.signature-generator.patterns.allowed_objecttype.label,Zulässiger Objekttyp,Allowed Objecttype
+signature.generator.custom.data.type.name,Inventarnummern-Generator,Signature Generator
+custom.data.type.signature.generator.name,Inventarnummern-Generator,Signature Generator
+custom:base.custom-data-type-signature-generator.signature-generator,Custom-Data-Type-Inventarnummern-Generator,Custom-Data-Type-Signature-Generator
+signaturegenerator.pool.manager.tab.empty_patters_hint,Es sind keine Patterns konfiguriert. Bitte konfigurieren Sie mindestens ein Pattern im Plugin-Konfigurationsbereich.,No patterns configured. Please configure at least one pattern in the plugin configuration area.
+signaturegenerator.pool.manager.tab.objecttype_block_headline,Pattern wählen für Objekttyp,Select pattern for objecttype
+custom.data.type.signature-generator.field.signature.label,Generierte Signatur,Generated Signature
+custom.data.type.signature-generator.field.signature_not_generated_yet,Wird beim Speichern generiert,Will be generated while saving
+
+server.config.parameter.system.signature-generator.sequence_objecttype.label,Objekttyp zum Speichern der Sequenzen,Objecttype for saveing the sequences
+server.config.name.system.signaturegenerator.pattern_id.label,Textfeld für die ID des Patterns im Objekttyp,Textfield for the pattern-ID in objecttype
+server.config.name.system.signaturegenerator.sequence_id.label,Textfeld für die ID der Sequenz im Objekttyp,Textfield for the sequence-ID in objecttype
+server.config.name.system.signaturegenerator.num_field.label,Nummernfeld für die Sequenz des Patterns im Objekttyp,Numberfield for the pattern-sequence in objecttype
+
+server.right.system.plugin.custom-data-type-signature-generator.allow_deletion_of_signature,Inventarnummern-Generator,Signature Generator
+server.right.system.plugin.custom-data-type-signature-generator.allow_deletion_of_signature.parm.allow_deletion_of_signature,Erlaube das Löschen von bereits generierten Signaturen,Allow the deletion of already generated numbers
+
+fylr-plugin-signature-generator-x-button-tooltip,Generierte Signatur löschen?,Delete generated signature?
+
+custom.data.type.signature.generator.config.parameter.mask.allow_manual_edit.value.label,Manuell editieren,Manually edit
+custom.data.type.signature.generator.config.parameter.mask.allow_manual_edit.value.checkbox,Erlauben,Allow
+
+server.config.parameter.system.signature-generator.api_user.label,User für die Generierung der Sequenzen,User for sequence-generation

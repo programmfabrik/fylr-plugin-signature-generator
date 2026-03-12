@@ -1,0 +1,16 @@
+{
+  "name": "fylr-plugin-signature-generator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "flatted": "^3.4.1",
+    "https": "^1.0.0"
+  },
+  "description": "> This Plugin / Repo is being maintained by a community of developers. There is no warranty given or bug fixing guarantee; especially not by Programmfabrik GmbH. Please use the github issue tracking to report bugs and self organize bug fixing. Feel free to directly contact the committing developers."
+}
