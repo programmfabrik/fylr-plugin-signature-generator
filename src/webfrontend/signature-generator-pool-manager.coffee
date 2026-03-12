@@ -10,7 +10,7 @@ class ez5.PoolManagerSignatureGenerator extends ez5.PoolPlugin
                     text: $$('signaturegenerator.pool.manager.tab.empty_patters_hint')
 
     # get fields from baseconfig
-    baseConfig = ez5.session.getBaseConfig("plugin", "custom-data-type-signature-generator")
+    baseConfig = ez5.session.getBaseConfig("plugin", "fylr-plugin-signature-generator")
     
     patterns = baseConfig['signature-generator']?.patterns
     if(patterns)

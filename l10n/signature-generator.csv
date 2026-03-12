@@ -37,8 +37,8 @@ server.config.name.system.signaturegenerator.pattern_id.label,Textfeld für die 
 server.config.name.system.signaturegenerator.sequence_id.label,Textfeld für die ID der Sequenz im Objekttyp,Textfield for the sequence-ID in objecttype
 server.config.name.system.signaturegenerator.num_field.label,Nummernfeld für die Sequenz des Patterns im Objekttyp,Numberfield for the pattern-sequence in objecttype
 
-server.right.system.plugin.custom-data-type-signature-generator.allow_deletion_of_signature,Inventarnummern-Generator,Signature Generator
-server.right.system.plugin.custom-data-type-signature-generator.allow_deletion_of_signature.parm.allow_deletion_of_signature,Erlaube das Löschen von bereits generierten Signaturen,Allow the deletion of already generated numbers
+server.right.system.plugin.fylr-plugin-signature-generator.allow_deletion_of_signature,Inventarnummern-Generator,Signature Generator
+server.right.system.plugin.fylr-plugin-signature-generator.allow_deletion_of_signature.parm.allow_deletion_of_signature,Erlaube das Löschen von bereits generierten Signaturen,Allow the deletion of already generated numbers
 
 fylr-plugin-signature-generator-x-button-tooltip,Generierte Signatur löschen?,Delete generated signature?
 

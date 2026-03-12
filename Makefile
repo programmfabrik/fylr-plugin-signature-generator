@@ -1,5 +1,5 @@
 ZIP_NAME ?= "signaturegenerator.zip"
-PLUGIN_NAME = signature-generator
+PLUGIN_NAME = fylr-plugin-signature-generator
 
 COFFEE_FILES =  \
 	signature-generator-custom-field.coffee \

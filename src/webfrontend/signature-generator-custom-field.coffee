@@ -46,8 +46,9 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
             hasDeletionRight = true
             
         # check system right
-        if ez5.session.hasSystemRight("plugin.custom-data-type-signature-generator.allow_deletion_of_signature")
-            if ez5.session.system_rights['plugin.custom-data-type-signature-generator.allow_deletion_of_signature']['allow_deletion_of_signature'] == true
+        console.log("ez5.session", ez5.session);
+        if ez5.session.hasSystemRight("plugin.fylr-plugin-signature-generator.allow_deletion_of_signature")
+            if ez5.session.system_rights['plugin.fylr-plugin-signature-generator.allow_deletion_of_signature']['allow_deletion_of_signature'] == true
                 # check mask config
                 if mask_settings?.allow_manual_edit?.value == true
                     hasDeletionRight = true

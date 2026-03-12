@@ -22,7 +22,7 @@ process.stdin.on('data', d => {
 process.stdin.on('end', async () => {
     // get data and input
     const data = JSON.parse(input);
-    const configuration = data.info.config.plugin['custom-data-type-signature-generator'].config['signature-generator']    
+    const configuration = data.info.config.plugin['fylr-plugin-signature-generator'].config['signature-generator']    
 
     // get plugin-user-token for sequence-generation
     if(info?.plugin_user_access_token) {

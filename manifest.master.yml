@@ -1,5 +1,5 @@
 plugin:
-  name: custom-data-type-signature-generator
+  name: fylr-plugin-signature-generator
   version: 1.0
   l10n: l10n/signature-generator.csv
   url: https://github.com/programmfabrik/fylr-plugin-signature-generator
