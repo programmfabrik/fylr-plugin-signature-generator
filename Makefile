@@ -2,11 +2,13 @@ ZIP_NAME ?= "signaturegenerator.zip"
 PLUGIN_NAME = fylr-plugin-signature-generator
 
 COFFEE_FILES =  \
+	signature-generator-facet.coffee \
 	signature-generator-custom-field.coffee \
 	objecttype-selector-base-config.coffee \
 	field-selector-base-config.coffee \
 	signature-generator-custom-field.coffee \
-	signature-generator-pool-manager.coffee
+	signature-generator-pool-manager.coffee 
+	
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -28,21 +30,21 @@ build: clean buildinfojson ## build plugin
 	mkdir -p src/tmp # build code from coffee
 	cp src/webfrontend/*.coffee src/tmp
 	cd src/tmp && coffee -b --compile ${COFFEE_FILES} # bare-parameter is obligatory!
-	cat src/tmp/*.js > build/$(PLUGIN_NAME)/webfrontend/signature-generator.js
+	cat src/tmp/*.js > build/$(PLUGIN_NAME)/webfrontend/signaturegenerator.js
 	rm -rf src/tmp # clean tmp
 
-	cp src/webfrontend/css/signature-generator.css build/$(PLUGIN_NAME)/webfrontend/signature-generator.css # copy css
+	cp src/webfrontend/css/signaturegenerator.css build/$(PLUGIN_NAME)/webfrontend/signaturegenerator.css # copy css
 
 	## build server code, add all files to one, so we can easily use it in the plugin without require or similar
 
-	touch build/$(PLUGIN_NAME)/server/signature-generator.js
-	cat src/server/helpers.js >> build/$(PLUGIN_NAME)/server/signature-generator.js
-	cat src/server/sequence.js >> build/$(PLUGIN_NAME)/server/signature-generator.js
-	cat src/server/validate.js >> build/$(PLUGIN_NAME)/server/signature-generator.js
-	cat src/server/render.js >> build/$(PLUGIN_NAME)/server/signature-generator.js
-	cat src/server/signature-generator.js >> build/$(PLUGIN_NAME)/server/signature-generator.js
+	touch build/$(PLUGIN_NAME)/server/signaturegenerator.js
+	cat src/server/helpers.js >> build/$(PLUGIN_NAME)/server/signaturegenerator.js
+	cat src/server/sequence.js >> build/$(PLUGIN_NAME)/server/signaturegenerator.js
+	cat src/server/validate.js >> build/$(PLUGIN_NAME)/server/signaturegenerator.js
+	cat src/server/render.js >> build/$(PLUGIN_NAME)/server/signaturegenerator.js
+	cat src/server/signaturegenerator.js >> build/$(PLUGIN_NAME)/server/signaturegenerator.js
 
-	cp l10n/signature-generator.csv build/$(PLUGIN_NAME)/l10n/signature-generator.csv # copy l10n
+	cp l10n/signaturegenerator.csv build/$(PLUGIN_NAME)/l10n/signaturegenerator.csv # copy l10n
 
 	cp manifest.master.yml build/$(PLUGIN_NAME)/manifest.yml # copy manifest
 

@@ -1,7 +1,7 @@
 plugin:
-  name: fylr-plugin-signature-generator
+  name: signaturegenerator
   version: 1.0
-  l10n: l10n/signature-generator.csv
+  l10n: l10n/signaturegenerator.csv
   url: https://github.com/programmfabrik/fylr-plugin-signature-generator
   displayname:
     de-DE: Inventarnummern-Generator
@@ -10,8 +10,8 @@ plugin:
     de-DE: Erlaubt das automatische Generieren von Inventarnummern für Objekte an Hand von konfigurierbaren Vorlagen.
     en-US: Allows the automatic generation of signature numbers for objects based on configurable templates.
   webfrontend:
-    url: signature-generator.js
-    css: signature-generator.css    
+    url: signaturegenerator.js
+    css: signaturegenerator.css    
   server:
     api-version:
       require: 1
@@ -19,7 +19,14 @@ plugin:
 base_url_prefix: "webfrontend"
 
 custom_types:
-  signature-generator:
+  signaturegenerator:
+    mapping:
+      signature:
+        type: text
+      pattern:
+        type: text
+      facetTerm:
+        type: text_l10n
     config:
       mask:
         - name: allow_manual_edit
@@ -124,6 +131,6 @@ callbacks:
                 type: body
               args:
                 - type: "value"
-                  value: "%_exec.pluginDir%/server/signature-generator.js"
+                  value: "%_exec.pluginDir%/server/signaturegenerator.js"
                 - type: "value"
                   value: "%info.json%"                        

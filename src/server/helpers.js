@@ -25,6 +25,56 @@ function throwErrorToFrontend(error = '') {
 }
 
 //////////////////////////////////////////////
+// generates _standard 
+//////////////////////////////////////////////
+
+function getStandardTextFromSignature(databaseLanguages, signature) {
+    const shortenedDatabaseLanguages = databaseLanguages.map(value => value.split('-')[0]);
+
+    const _standard = {};
+    const l10nObject = {};
+
+    // init l10nObject for fulltext
+    for (const language of databaseLanguages) {
+      l10nObject[language] = signature;
+    }
+
+    // give l10n-languages the fylr-language-syntax
+    for (const l10nObjectKey in l10nObject) {
+      if (Object.hasOwnProperty.call(l10nObject, l10nObjectKey)) {
+        // get shortened version
+        const shortenedLanguage = l10nObjectKey.split('-')[0];
+        // add to l10n
+        l10nObject[l10nObjectKey] = signature;
+      }
+    }
+
+    _standard.l10ntext = l10nObject;
+
+    return _standard;
+}
+
+  //////////////////////////////////////////////
+  // generates facetTerm
+  //////////////////////////////////////////////
+
+function getFacetTerm(databaseLanguages, pattern, pattern_id) {
+    const shortenedDatabaseLanguages = databaseLanguages.map(value => value.split('-')[0]);
+
+    let _facet_term = {};
+    const l10nObject = {};
+
+    // init l10nObject
+    for (const language of databaseLanguages) {
+      l10nObject[language] = pattern + '@$@' + pattern_id;
+    }
+
+    // if l10n-object is not empty
+    _facet_term = l10nObject;
+    return _facet_term;
+}
+
+//////////////////////////////////////////////
 // logs a long string in parts
 //////////////////////////////////////////////
 

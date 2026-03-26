@@ -1,11 +1,11 @@
 class CustomDataTypeSignatureGenerator extends CustomDataType
 
     getCustomDataTypeName: ->
-        "custom:base.custom-data-type-signature-generator.signature-generator"
+        "custom:base.signaturegenerator.signaturegenerator"
 
     getCustomDataOptionsInDatamodelInfo: (custom_settings) ->
        tags = []
-       
+
        tags
 
     supportsStandard: ->
@@ -13,6 +13,13 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
 
     supportsGeoStandard: ->
         false
+
+    supportsFacet: ->
+        true
+
+    getFacet: (opts) ->
+        opts.field = @
+        new CustomDataTypeSignatureGeneratorFacet(opts)
 
     initData: (data) ->
         if not data[@name()]

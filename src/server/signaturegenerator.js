@@ -3,6 +3,7 @@ let API_URL = '';
 let access_token = '';
 let input = '';
 let info = undefined
+let databaseLanguages = [];
 
 if (process.argv.length >= 3) {
     info = JSON.parse(process.argv[2])
@@ -22,7 +23,11 @@ process.stdin.on('data', d => {
 process.stdin.on('end', async () => {
     // get data and input
     const data = JSON.parse(input);
-    const configuration = data.info.config.plugin['fylr-plugin-signature-generator'].config['signature-generator']    
+    const configuration = data?.info?.config?.plugin['signaturegenerator']?.config['signature-generator']    
+
+    if(!configuration) {
+        throwErrorToFrontend("Pluginconfig not found");
+    }
 
     // get plugin-user-token for sequence-generation
     if(info?.plugin_user_access_token) {
@@ -59,6 +64,28 @@ process.stdin.on('end', async () => {
     const objecttype = object._objecttype;
 
     ///////////////////////////////////////////////////////////////////////////////
+    // get config for databaselanguages from fylr
+
+    var url = 'http://fylr.localhost:8081/api/v1/config?access_token=' + access_token;
+    let datamodelConfigResponse = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!datamodelConfigResponse.ok) {
+        throwErrorToFrontend("Could not fetch config from fylr");
+    }
+    let datamodelConfig = await datamodelConfigResponse.json();
+    console.error("datamodelConfig", datamodelConfig);
+    databaseLanguages = datamodelConfig.system.config.languages.database;
+    console.error("databaseLanguages", databaseLanguages);
+    databaseLanguages = databaseLanguages.map((value, key, array) => {
+        return value.value;
+    });    
+    console.error("databaseLanguages", databaseLanguages);
+
+    ///////////////////////////////////////////////////////////////////////////////
     // check if objecttype has an signature-field and get fields name (toplevel)
 
     var url = 'http://fylr.localhost:8081/api/v1/schema/user/CURRENT?access_token=' + access_token;
@@ -79,7 +106,7 @@ process.stdin.on('end', async () => {
             // check only on toplevel - patterns only allowed on toplevel
             for(let column of objecttypeDatamodel.columns) {
                 if(column.kind == 'column') {
-                    if(column.type == 'custom:base.custom-data-type-signature-generator.signature-generator' || column.type == 'custom:extension.custom-data-type-signature-generator.signature-generator') {
+                    if(column.type == 'custom:base.signaturegenerator.signaturegenerator' || column.type == 'custom:extension.signaturegenerator.signaturegenerator') {
                         signatureColumnNameInDM = column.name;
                     }
                 }
@@ -112,7 +139,6 @@ process.stdin.on('end', async () => {
     ////////////////////////////////////////////////////////////////////////////////////
     // iterate the saved objects and handle each signature 
     ////////////////////////////////////////////////////////////////////////////////////
-
     for (let object of data.objects) {
         
         // check if object has a pool-link (obligatory to render a signature)                   
@@ -182,7 +208,6 @@ process.stdin.on('end', async () => {
         if(!patternPoolCheck) {
             console.error("No signature-generator-pattern configured for this pool");
             throwErrorToFrontend("No signature-generator-pattern configured for this pool");
-            continue;
         }
 
         // objecttypes can contain nested fields, which are tables themselves in the datamodel
@@ -201,11 +226,16 @@ process.stdin.on('end', async () => {
             signatureJSON = {};
             signatureJSON.signature = generatedSignature;
             signatureJSON.pattern = patternConfigToUse.pattern;
-            signatureJSON.pattern_name = patternConfigToUse.unique_name;
+            signatureJSON.pattern_id = patternConfigToUse.pattern_id;
+
+            signatureJSON._standard = getStandardTextFromSignature(databaseLanguages, generatedSignature);
+            signatureJSON._fulltext = signatureJSON._standard;
+            signatureJSON.facetTerm = getFacetTerm(databaseLanguages, signatureJSON.pattern, signatureJSON.pattern_id);
+
             object[objecttype][signatureColumnNameInDM] = signatureJSON;
         }
     }
-
+    
     logLongString(JSON.stringify(data), () => {
         process.exit(0);
     });
