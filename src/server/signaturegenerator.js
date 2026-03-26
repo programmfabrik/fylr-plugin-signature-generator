@@ -77,13 +77,10 @@ process.stdin.on('end', async () => {
         throwErrorToFrontend("Could not fetch config from fylr");
     }
     let datamodelConfig = await datamodelConfigResponse.json();
-    console.error("datamodelConfig", datamodelConfig);
     databaseLanguages = datamodelConfig.system.config.languages.database;
-    console.error("databaseLanguages", databaseLanguages);
     databaseLanguages = databaseLanguages.map((value, key, array) => {
         return value.value;
     });    
-    console.error("databaseLanguages", databaseLanguages);
 
     ///////////////////////////////////////////////////////////////////////////////
     // check if objecttype has an signature-field and get fields name (toplevel)

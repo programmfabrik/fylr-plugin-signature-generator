@@ -63,9 +63,44 @@ class ez5.PoolManagerSignatureGenerator extends ez5.PoolPlugin
     
     return tabs
 
+
   getSaveData: (save_data) ->
     that = @
 
-    return
+    # check all keys, that start with "signaturegenerator__"
+    for signatureGeneratorKey, signatureGeneratorValue of that._pool.data.pool.custom_data
+      if signatureGeneratorKey.startsWith('signaturegenerator__')
+
+        # if empty --> remove
+        if ! signatureGeneratorValue || signatureGeneratorValue == ''
+          delete that._pool.data.pool.custom_data[signatureGeneratorKey]  
+          continue
+
+        # check if objecttype exists, else remove
+        objecttypeFromPattern = signatureGeneratorKey.split('signaturegenerator__')[1]
+
+        # get list of all objecttypes in db
+        objecttypesList = ez5.schema.CURRENT._objecttypes.map (o) -> o.name
+
+        if objecttypeFromPattern not in objecttypesList
+          delete that._pool.data.pool.custom_data[signatureGeneratorKey]  
+          continue
+    
+        # check if linked pattern exists, else remove
+        patternID = signatureGeneratorValue
+
+        pluginConfig = ez5.session?.config?.base?.plugin['signaturegenerator']?.config['signature-generator']
+        if pluginConfig
+          patterns = pluginConfig.patterns;
+          patternExists = false
+          for pattern in patterns
+            if pattern.pattern_id == patternID
+              patternExists = true
+          if patternExists == false
+            delete that._pool.data.pool.custom_data[signatureGeneratorKey]  
+
+    save_data = that._pool.data.pool.custom_data
+
+    return    
 
 Pool.plugins.registerPlugin(ez5.PoolManagerSignatureGenerator)

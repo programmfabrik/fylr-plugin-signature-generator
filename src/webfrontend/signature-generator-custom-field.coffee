@@ -44,21 +44,41 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
 
         cdata = data[@name()]
 
-        # different label if signature is already generated
-        generatedLabel = if cdata.signature? and cdata.signature isnt "" then $$('custom.data.type.signature-generator.field.signature.label') else $$('custom.data.type.signature-generator.field.signature_not_generated_yet')
-
         # x-button deletion of number (needs a systemright and a mask config!)
         hasDeletionRight = false;
         if ez5.session.hasSystemRight("system.root")
             hasDeletionRight = true
             
         # check system right
-        console.log("ez5.session", ez5.session);
         if ez5.session.hasSystemRight("plugin.fylr-plugin-signature-generator.allow_deletion_of_signature")
             if ez5.session.system_rights['plugin.fylr-plugin-signature-generator.allow_deletion_of_signature']['allow_deletion_of_signature'] == true
                 # check mask config
                 if mask_settings?.allow_manual_edit?.value == true
                     hasDeletionRight = true
+
+        # if not pattern is given in pool --> show as default text-input-field
+        onlyManual = true;
+        poolID = opts?.data?._pool?.pool?._id             
+        if poolID 
+            pool = ez5.pools.findPoolById(poolID)
+            customData = pool?.data?.pool?.custom_data
+            foundEntryInConfig = false;
+            # check all keys, that start with "signaturegenerator__"
+            for signatureGeneratorKey, signatureGeneratorValue of customData
+                if signatureGeneratorKey.startsWith('signaturegenerator__')
+                    # check if objecttype exists
+                    objecttypeFromPattern = signatureGeneratorKey.split('signaturegenerator__')[1]
+                    if objecttypeFromPattern == top_level_data?._objecttype
+                        onlyManual = false
+                    
+        formClass = 'signaturegenerator-input-readonly'
+        if onlyManual
+            formClass = 'signaturegenerator-input'
+
+        # different label if signature is already generated
+        generatedLabel = if cdata.signature? and cdata.signature isnt "" then $$('custom.data.type.signature-generator.field.signature.label') else $$('custom.data.type.signature-generator.field.signature_not_generated_yet')
+        if onlyManual
+            generatedLabel = ''
 
         form = new CUI.Form
             data: cdata
@@ -67,7 +87,7 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
                     label: generatedLabel
                 type: CUI.Input
                 name: "signature"
-                class: "signaturegenerator-input-readonly"
+                class: formClass
             ]
             onDataChanged: =>
                 CUI.Events.trigger
@@ -75,16 +95,18 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
                     type: "editor-changed"
         .start()
 
-        formDiv = CUI.dom.element("DIV")
+        formDiv = CUI.dom.element("DIV")        
 
         CUI.dom.append(formDiv, form)
 
         # set input readonly
-        dataField = CUI.dom.matchSelector(formDiv, '.signaturegenerator-input-readonly')[0]
-        inputField = CUI.dom.matchSelector(dataField, 'input')[0]
-        inputField.readOnly = true;
+        if onlyManual == false
+            dataField = CUI.dom.matchSelector(formDiv, '.signaturegenerator-input-readonly')[0]
+            inputField = CUI.dom.matchSelector(dataField, 'input')[0]
+            inputField.readOnly = true;
 
-        if hasDeletionRight
+        xButton = '';
+        if hasDeletionRight && ! onlyManual
             xButton = new CUI.Button
                 class: 'fylr-plugin-signature-generator-x-button'
                 icon_left: new CUI.Icon(class: "fa-times")
