@@ -41,7 +41,7 @@ async function createSequence(sequenceConfig, access_token) {
     const url = API_URL + "/api/v1/db/" + sequenceConfig.sequence_objecttype + "?priority=2&format=long&access_token=" + access_token;
 
     let sequenceObj = {};
-    sequenceObj._mask = 'signaturegenerator_sequences__all_fields';
+    sequenceObj._mask = '_all_fields';
     sequenceObj._objecttype = sequenceConfig.sequence_objecttype;
     sequenceObj[sequenceConfig.sequence_objecttype] = {}
     sequenceObj[sequenceConfig.sequence_objecttype]._id = null;
@@ -51,8 +51,6 @@ async function createSequence(sequenceConfig, access_token) {
     sequenceObj[sequenceConfig.sequence_objecttype][sequenceConfig.sequence_num_field.split(".").pop()] = sequenceConfig.startvalue * 1;
 
     sequenceObj = [sequenceObj];
-    console.error("url", url);
-    console.error(JSON.stringify(sequenceObj));
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -74,7 +72,6 @@ async function createSequence(sequenceConfig, access_token) {
 
 
 async function updateSequence(sequenceConfig, seqLastData, access_token) {
- 
   let seqNewData = seqLastData;
   // increase version
   seqNewData[sequenceConfig.sequence_objecttype]._version++;

@@ -96,13 +96,7 @@ async function renderPattern(configuration, patternConfig, object = {}, access_t
       let newSeqValue = 1;  
       let seqLastData = false;
 
-      // TODO TRACK TIME!!!!!!
-      // TODO TRACK TIME!!!!!!
-      // TODO TRACK TIME!!!!!!
-      // TODO TRACK TIME!!!!!!
-
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
-
         // try to find existing sequence
         seqLastData = await getLastSequence(sequenceConfig, access_token);
         
