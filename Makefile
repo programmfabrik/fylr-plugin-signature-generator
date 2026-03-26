@@ -1,5 +1,5 @@
 ZIP_NAME ?= "signaturegenerator.zip"
-PLUGIN_NAME = signature-generator
+PLUGIN_NAME = signaturegenerator
 
 COFFEE_FILES =  \
 	signature-generator-facet.coffee \
