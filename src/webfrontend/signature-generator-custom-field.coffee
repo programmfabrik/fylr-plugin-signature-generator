@@ -143,11 +143,11 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
         horizontalLayout = new CUI.HorizontalLayout
           class: "fylr-plugin-signature-generator-hl ez5-field-block"
           center:
+            class: "fylr-plugin-signature-generator-hl-center"
             content: formDiv
           right:
             class: "fylr-plugin-signature-generator-hl-right"
-            content:
-              xButton        
+            content: xButton        
 
         return horizontalLayout
 

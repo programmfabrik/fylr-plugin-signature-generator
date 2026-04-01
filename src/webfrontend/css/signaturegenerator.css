@@ -27,3 +27,12 @@
 .fylr-plugin-signature-generator-x-button {
     margin-top: 22px;
 }
+
+/* disable black linein editor on the left */
+.ez5-custom-data-type-signature-generator > .ez5-field-group {
+    padding: 0px;
+}
+.ez5-custom-data-type-signature-generator > .ez5-field-group::before {
+    all: unset !important;
+    content: none !important;    
+}
