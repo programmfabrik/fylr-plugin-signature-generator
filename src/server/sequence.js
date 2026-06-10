@@ -1,6 +1,6 @@
 async function getLastSequence(sequenceConfig, access_token) {
   // 1. get all sequences and then find the matching one
-  const url =  API_URL + "/api/v1/db/" + sequenceConfig.sequence_objecttype + "/_all_fields/list?version=current&access_token=" + access_token;
+  const url =  API_URL + "/api/v1/db/" + sequenceConfig.sequence_objecttype + "/_all_fields/list?access_token=" + access_token;
   const response = await fetch(url, {
     method: "GET",
     headers: {
