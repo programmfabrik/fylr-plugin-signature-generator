@@ -46,3 +46,8 @@ custom.data.type.signature.generator.config.parameter.mask.allow_manual_edit.val
 custom.data.type.signature.generator.config.parameter.mask.allow_manual_edit.value.checkbox,Erlauben,Allow
 
 server.config.parameter.system.signature-generator.api_user.label,User für die Generierung der Sequenzen,User for sequence-generation
+
+server.config.name.system.update_signature,Updatemechanismus,Updatemechanism
+server.config.parameter.system.update_signature.custom_expires_days.label,Haltbarkeit der Einträge in Tagen,Expires in x days
+server.config.parameter.system.update_signature.activate.label,Updater (ergänzt Systemfelder nach manuellem Import - nur einmal nutzen),Updater(adds systemfields after manual import - use only once)
+server.config.parameter.system.update_signature.activate.checkbox,Aktivieren,activate

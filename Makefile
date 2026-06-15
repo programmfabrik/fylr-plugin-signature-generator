@@ -26,6 +26,7 @@ build: clean buildinfojson ## build plugin
 	mkdir -p build/$(PLUGIN_NAME)/webfrontend
 	mkdir -p build/$(PLUGIN_NAME)/l10n
 	mkdir -p build/$(PLUGIN_NAME)/server
+	mkdir -p build/$(PLUGIN_NAME)/updater
 
 	mkdir -p src/tmp # build code from coffee
 	cp src/webfrontend/*.coffee src/tmp
@@ -43,6 +44,8 @@ build: clean buildinfojson ## build plugin
 	cat src/server/validate.js >> build/$(PLUGIN_NAME)/server/signaturegenerator.js
 	cat src/server/render.js >> build/$(PLUGIN_NAME)/server/signaturegenerator.js
 	cat src/server/signaturegenerator.js >> build/$(PLUGIN_NAME)/server/signaturegenerator.js
+
+	cp src/updater/signatureUpdater.js build/$(PLUGIN_NAME)/updater/signatureUpdater.js
 
 	cp l10n/signaturegenerator.csv build/$(PLUGIN_NAME)/l10n/signaturegenerator.csv # copy l10n
 
