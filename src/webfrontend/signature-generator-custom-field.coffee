@@ -1,4 +1,4 @@
-class CustomDataTypeSignatureGenerator extends CustomDataTypeWithCommonsAsPlugin
+class CustomDataTypeSignatureGenerator extends CustomDataType
 
     getCustomDataTypeName: ->
         "custom:base.signaturegenerator.signaturegenerator"
@@ -13,6 +13,9 @@ class CustomDataTypeSignatureGenerator extends CustomDataTypeWithCommonsAsPlugin
 
     supportsGeoStandard: ->
         false
+
+    supportsPrinting: ->
+        true
 
     supportsFacet: ->
         false
@@ -47,7 +50,6 @@ class CustomDataTypeSignatureGenerator extends CustomDataTypeWithCommonsAsPlugin
 	# possible additions, which should be stored in key+":<additional>"
 
     getSearchFilter: (data, key=@name()) ->
-
         if data[key+":unset"]
             filter =
                 type: "in"
@@ -123,8 +125,15 @@ class CustomDataTypeSignatureGenerator extends CustomDataTypeWithCommonsAsPlugin
 
         field_names
 
+    ########################################
+    # renders output in detailmode
+    ########################################
+
     renderDetailOutput: (data, top_level_data, opts) ->
         cdata = data[@name()]
+
+        if ! cdata.signature
+            return
 
         div = CUI.dom.element("DIV")
         CUI.dom.append(div,

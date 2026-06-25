@@ -24,7 +24,8 @@ custom_types:
       signature:
         type: string
       facetTerm:
-        type: text_l10n
+        type: text_l10n      
+        skipTerms: true
     config:
       mask:
         - name: allow_manual_edit
