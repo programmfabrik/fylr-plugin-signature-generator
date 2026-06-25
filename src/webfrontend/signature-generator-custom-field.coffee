@@ -1,4 +1,4 @@
-class CustomDataTypeSignatureGenerator extends CustomDataType
+class CustomDataTypeSignatureGenerator extends CustomDataTypeWithCommonsAsPlugin
 
     getCustomDataTypeName: ->
         "custom:base.signaturegenerator.signaturegenerator"
@@ -15,7 +15,7 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
         false
 
     supportsFacet: ->
-        true
+        false
 
     getFacet: (opts) ->
         opts.field = @
@@ -24,6 +24,31 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
     initData: (data) ->
         if not data[@name()]
             data[@name()] = {}
+
+    # provide a sort function to sort your data
+    getSortFunction: ->
+        (a, b) =>
+            CUI.util.compareIndex(a[@name()]?.signature or 'zzz', b[@name()]?.signature or 'zzz')
+
+    # Enable sort
+    hasRenderForSort: ->
+        return true
+
+    sortExtraOpts: ->
+        return [
+            {
+                text: "signature"
+                value: "signature"
+            }
+        ]
+
+    getFieldNames: ->
+
+        field_names = [
+            @fullName()+".signature"
+        ]
+
+        field_names
 
     renderDetailOutput: (data, top_level_data, opts) ->
         cdata = data[@name()]
