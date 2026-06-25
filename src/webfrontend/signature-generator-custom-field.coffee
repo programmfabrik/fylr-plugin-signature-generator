@@ -42,6 +42,79 @@ class CustomDataTypeSignatureGenerator extends CustomDataTypeWithCommonsAsPlugin
             }
         ]
 
+	# returns a search filter suitable to the search array part
+	# of the request, the data to be search is in data[key] plus
+	# possible additions, which should be stored in key+":<additional>"
+
+    getSearchFilter: (data, key=@name()) ->
+
+        if data[key+":unset"]
+            filter =
+                type: "in"
+                fields: [ @fullName()+".signature" ]
+                in: [ null ]
+            filter._unnest = true
+            filter._unset_filter = true
+            return filter
+
+        else if data[key+":has_value"]
+            return @getHasValueFilter(data, key)
+
+        filter = super(data, key)
+        if filter
+            return filter
+
+        if CUI.util.isEmpty(data[key])
+            return
+
+        val = data[key]
+        [str, phrase] = Search.getPhrase(val)
+
+        switch data[key+":type"]
+            when "token", "fulltext", undefined
+                filter =
+                    type: "match"
+                    mode: data[key+":mode"]
+                    fields: @getFieldNamesForSearch()
+                    string: str
+                    phrase: phrase
+
+            when "field"
+                filter =
+                    type: "in"
+                    fields: @getFieldNamesForSearch()
+                    in: [ str ]
+
+        filter
+
+    # returns a filter for the has_value filter
+    # this filter is used to find records, which have a value in this field
+    getHasValueFilter: (data, key=@name()) ->
+        if data[key+":has_value"]
+            filter =
+                type: "in"
+                fields: [ @fullName()+".signature" ]
+                in: [ null ]
+                bool: "must_not"
+            filter._unnest = true
+            filter._has_value_filter = true
+            return filter 
+
+    # returns a map for search tokens, containing name and value strings.
+    getQueryFieldBadge: (data) ->
+        if data["#{@name()}:unset"]
+            value = $$("text.column.badge.without")
+        else if data["#{@name()}:has_value"]
+            value = $$("field.search.badge.has_value")
+        else
+            value = data[@name()].signature
+
+        if !data[@name()]?.signature && ! value 
+            value = data[@name()]
+
+        name: @nameLocalized()
+        value: value
+
     getFieldNames: ->
 
         field_names = [
