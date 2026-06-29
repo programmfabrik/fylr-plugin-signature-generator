@@ -1,4 +1,4 @@
-class CustomDataTypeSignatureGenerator extends CustomDataType
+class CustomDataTypeSignatureGenerator extends CustomDataTypeWithCommonsAsPlugin
 
     getCustomDataTypeName: ->
         "custom:base.signaturegenerator.signaturegenerator"
@@ -45,6 +45,34 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
             }
         ]
 
+    #######################################################################
+    # checks the form and returns status
+    getDataStatus: (cdata) ->
+        if cdata
+            if cdata.signature   
+                if cdata.signature.trim() != ''
+                    return "ok"
+
+                if cdata.signature.trim() == ''
+                    return "empty"
+
+                return "invalid"
+        return "empty"
+
+    ########################################################################
+    # check if field is empty
+    isEmpty: (data, top_level_data, opts={}) ->
+        result = not data[@name(opts)]?.signature
+        return result
+
+    # returns markup to display in expert search
+    renderSearchInput: (data, opts={}) ->        
+        search_token = new SearchToken
+            column: @
+            data: data
+            fields: opts.fields              
+        .getInput().DOM
+
 	# returns a search filter suitable to the search array part
 	# of the request, the data to be search is in data[key] plus
 	# possible additions, which should be stored in key+":<additional>"
@@ -77,14 +105,14 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
                 filter =
                     type: "match"
                     mode: data[key+":mode"]
-                    fields: @getFieldNamesForSearch()
+                    fields: [ @fullName()+".signature" ]
                     string: str
                     phrase: phrase
 
             when "field"
                 filter =
                     type: "in"
-                    fields: @getFieldNamesForSearch()
+                    fields: [ @fullName()+".signature" ]
                     in: [ str ]
 
         filter
@@ -118,17 +146,13 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
         value: value
 
     getFieldNames: ->
-
         field_names = [
             @fullName()+".signature"
         ]
 
         field_names
 
-    ########################################
     # renders output in detailmode
-    ########################################
-
     renderDetailOutput: (data, top_level_data, opts) ->
         cdata = data[@name()]
 
@@ -142,6 +166,7 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
         )
         return div
 
+    # renders form in editor
     renderEditorInput: (data, top_level_data, opts) ->
         mask_settings = @getCustomMaskSettings()
 
@@ -268,6 +293,7 @@ class CustomDataTypeSignatureGenerator extends CustomDataType
             text: cdata.signature
 
         save_data[@name()] = CUI.util.copyObject(cdata, true)
+        
         return
 
 CustomDataType.register(CustomDataTypeSignatureGenerator)
