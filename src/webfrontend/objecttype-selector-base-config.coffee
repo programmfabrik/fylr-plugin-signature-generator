@@ -6,7 +6,7 @@ class ObjecttypeSelectorBaseConfig extends BaseConfigPlugin
 
     # list of objecttypes for selection
     objecttypesOptions = []
-    for ot in ez5.schema.CURRENT._objecttypes
+    for ot in ez5.schema.CURRENT._objecttypes when not ot._instance
       value = ot.name
       objectType = new Objecttype(new Table("CURRENT", ot.table_id))
       text = objectType.nameLocalized()
