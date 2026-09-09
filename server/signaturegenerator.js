@@ -65,7 +65,6 @@ process.stdin.on('end', async () => {
 
     ///////////////////////////////////////////////////////////////////////////////
     // get config for databaselanguages from fylr
-
     var url = 'http://fylr.localhost:8081/api/v1/config?access_token=' + access_token;
     let datamodelConfigResponse = await fetch(url, {
         method: 'GET',

@@ -1,0 +1,28 @@
+server:
+  install:
+  - l10n/signaturegenerator.csv
+  bundles:
+    - out: updater/signatureUpdater.js
+      sources:
+      - src/updater/signatureUpdater.js
+    - out: server/signaturegenerator.js
+      sources:
+      - server/helpers.js
+      - server/sequence.js
+      - server/validate.js
+      - server/render.js
+      - server/signaturegenerator.js
+webfrontend:
+  bundles:
+    - out: webfrontend/signaturegenerator.js
+      sources:
+      - webfrontend/field-selector-base-config.coffee
+      - webfrontend/objecttype-selector-base-config.coffee
+      - webfrontend/signature-generator-custom-field.coffee
+      - webfrontend/signature-generator-facet.coffee
+      - webfrontend/signature-generator-pool-manager.coffee
+  install:
+  - webfrontend/signaturegenerator.css
+
+zip_aliases:
+- signaturegenerator.zip
