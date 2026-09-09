@@ -39,6 +39,8 @@ server.config.name.system.signaturegenerator.num_field.label,Nummernfeld für di
 
 server.right.system.plugin.fylr-plugin-signature-generator.allow_deletion_of_signature,Inventarnummern-Generator,Signature Generator
 server.right.system.plugin.fylr-plugin-signature-generator.allow_deletion_of_signature.parm.allow_deletion_of_signature,Erlaube das Löschen von bereits generierten Signaturen,Allow the deletion of already generated numbers
+server.right.system.plugin.signaturegenerator.allow_deletion_of_signature,Inventarnummern-Generator,Signature Generator
+server.right.system.plugin.signaturegenerator.allow_deletion_of_signature.parm.allow_deletion_of_signature,Erlaube das Löschen von bereits generierten Signaturen,Allow the deletion of already generated numbers
 
 fylr-plugin-signature-generator-x-button-tooltip,Generierte Signatur löschen?,Delete generated signature?
 

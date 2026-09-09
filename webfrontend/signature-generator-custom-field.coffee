@@ -178,12 +178,10 @@ class CustomDataTypeSignatureGenerator extends CustomDataTypeWithCommonsAsPlugin
 
         # x-button deletion of number (needs a systemright and a mask config!)
         hasDeletionRight = false;
-        if ez5.session.hasSystemRight("system.root")
-            hasDeletionRight = true
             
         # check system right
-        if ez5.session.hasSystemRight("plugin.fylr-plugin-signature-generator.allow_deletion_of_signature")
-            if ez5.session.system_rights['plugin.fylr-plugin-signature-generator.allow_deletion_of_signature']['allow_deletion_of_signature'] == true
+        if ez5.session.hasSystemRight("plugin.signaturegenerator.allow_deletion_of_signature")
+            if ez5.session.system_rights['plugin.signaturegenerator.allow_deletion_of_signature']['allow_deletion_of_signature'] == true
                 # check mask config
                 if mask_settings?.allow_manual_edit?.value == true
                     hasDeletionRight = true
